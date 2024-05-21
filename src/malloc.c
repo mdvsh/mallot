@@ -108,3 +108,41 @@ void free(void *ptr) {
   used_mem -= block->size;
   pthread_mutex_unlock(&seg_free_list_mutex);
 }
+
+void *realloc(void *ptr, size_t size) {
+  if (!ptr) {
+    return malloc(size);
+  }
+  if (size == 0) {
+    free(ptr);
+    return NULL;
+  }
+
+  // extract the block
+  m_block *block = (m_block *)((char *)ptr - offsetof(m_block, data));
+  size_t prev_size = block->size;
+
+  // just return same ptr
+  if (size <= prev_size) {
+    return ptr;
+  }
+
+  void *realloced = malloc(size);
+  if (!realloced) {
+    return NULL;
+  }
+
+  // copy over to new place
+  memcpy(realloced, ptr, prev_size);
+  free(ptr);
+  return realloced;
+}
+
+void *calloc(size_t count, size_t size) {
+  size_t total_size = count * size;
+  void *addr = malloc(total_size);
+  if (addr) {
+    memset(addr, 0, total_size);
+  }
+  return addr;
+}

@@ -11,7 +11,7 @@ OBJS = $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRCS))
 MAIN = $(BUILD_DIR)/main
 
 TEST_SRCS = $(TEST_DIR)/basic_alloc_free.c \
-#            $(TEST_DIR)/calloc_realloc.c \
+            $(TEST_DIR)/calloc_realloc.c \
 #            $(TEST_DIR)/thread_safety.c
 TEST_OBJS = $(patsubst $(TEST_DIR)/%.c,$(BUILD_DIR)/%.o,$(TEST_SRCS))
 TESTS = $(patsubst $(TEST_DIR)/%.c,$(BUILD_DIR)/%,$(TEST_SRCS))

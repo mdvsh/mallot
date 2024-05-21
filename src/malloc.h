@@ -8,6 +8,7 @@
 #include <pthread.h>
 #include <sys/mman.h>
 #include <stddef.h>
+#include <string.h>
 
 #define NUM_LISTS 128
 #define ALIGNMENT 8
@@ -31,5 +32,7 @@ void *malloc(size_t size);
 static void *expand_memory(size_t size);
 static void *mmap_helper(size_t size);
 void free(void *ptr);
+void *realloc(void *ptr, size_t size);
+void *calloc(size_t count, size_t size);
 
 #endif // MALLOT_SRC_MALLOC_H_
